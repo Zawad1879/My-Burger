@@ -20,7 +20,7 @@ class BurgerBuilder extends Component{
 			cheese : 0,
 			meat : 0
 		},
-		totalPrice : 4,
+		totalPrice : 0,
 
 	}
 
@@ -49,6 +49,22 @@ class BurgerBuilder extends Component{
 		const newPrice = oldPrice - priceNegation;
 		this.setState({totalPrice : newPrice, ingredients : updatedIngredients});
 	} 
+
+	removeIngredientHandler = (type) => {
+		const oldCount = this.state.ingredients[type];
+		if(oldCount <= 0){
+			return;
+		}
+		const updatedCount = oldCount - 1;
+		const updatedIngredients = {
+			...this.state.ingredients
+		};
+		updatedIngredients[type] = updatedCount;
+		const priceSubtraction = INGREDIENT_PRICES[type];
+		const oldPrice = this.state.totalPrice;
+		const newPrice = oldPrice - priceSubtraction;
+		this.setState({totalPrice : newPrice, ingredients : updatedIngredients});
+	}
 
 	render(){
 		const disabledInfo = {
